@@ -6,6 +6,7 @@ import RestaurantForm from './components/RestaurantForm';
 import Section from './components/Section';
 import CategoryForm from './components/CategoryForm';
 import CategoryList from './components/CategoryList';
+import ItemForm from './components/ItemForm';
 
 export default function App() {
   const [categories, setCategories] = useState([]);
@@ -31,7 +32,7 @@ export default function App() {
 
         <Section title='Adicionar categorias'>
           <CategoryForm categories={categories} handleCategory={handleCategory} />
-          <CategoryList categories={categories} />
+          <CategoryList categories={categories} setCategories={setCategories} />
         </Section>
       </Main>
     </>

@@ -51,6 +51,7 @@ export default function RestaurantForm() {
         label='Adicionar logo'
         name='logo'
         id='restaurant-logo'
+        imgClassName='rounded-full'
         onChange={e =>
           setRestaurant({ ...restaurant, logo: URL.createObjectURL(e.target.files[0]) })
         }
