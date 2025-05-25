@@ -1,10 +1,43 @@
 import Button from './Button';
 import InputContainer from './InputContainer';
 
-export default function CategoryForm() {
+export default function CategoryForm({ categories, handleCategory }) {
+  const handleSubmit = async event => {
+    event.preventDefault();
+
+    const category = await handleFormData(event);
+    event.target.reset();
+
+    handleCategory(category);
+
+    localStorage.setItem('categories', JSON.stringify([...categories, category]));
+  };
+
+  const handleFormData = async event => {
+    const { name, description } = event.target.elements;
+
+    const formData = {
+      id: categories.length + 1,
+      name: name.value,
+      description: description.value,
+      items: [],
+    };
+
+    return formData;
+  };
+
   return (
-    <form className='flex justify-center border-2 border-gray-300 p-4 gap-4 flex-1'>
-      <InputContainer label='Nome da categoria' type='text' name='name' placeholder='Ex: Pizza' />
+    <form
+      onSubmit={handleSubmit}
+      className='flex w-full justify-center border-2 border-gray-300 p-4 gap-4 flex-1'
+    >
+      <InputContainer
+        inputClassName='flex-1'
+        label='Nome da categoria'
+        type='text'
+        name='name'
+        placeholder='Ex: Pizza'
+      />
 
       <InputContainer
         label='Descrição da categoria'

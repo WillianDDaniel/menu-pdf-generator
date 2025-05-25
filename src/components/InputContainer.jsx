@@ -8,7 +8,7 @@ export default function InputContainer({
   ...props
 }) {
   return (
-    <div className='flex flex-col mt-0.5'>
+    <div className='flex flex-1 flex-col mt-0.5'>
       <label className={labelClassName} htmlFor={props.id}>
         {label}
       </label>
