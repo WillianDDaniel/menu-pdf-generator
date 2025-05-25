@@ -91,9 +91,7 @@ export default function RestaurantForm() {
           required
         />
 
-        <Button type='submit' className={'mt-4 cursor-pointer'}>
-          Salvar
-        </Button>
+        <Button type='submit'>Salvar</Button>
       </div>
     </form>
   );

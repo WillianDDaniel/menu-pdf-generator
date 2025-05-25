@@ -37,6 +37,7 @@ export default function CategoryForm({ categories, handleCategory }) {
         type='text'
         name='name'
         placeholder='Ex: Pizza'
+        required
       />
 
       <InputContainer
@@ -44,6 +45,7 @@ export default function CategoryForm({ categories, handleCategory }) {
         type='text'
         name='description'
         placeholder='Ex: Pizzas de diversos sabores'
+        required
       />
 
       <Button type='submit' className={'mt-4 cursor-pointer'}>

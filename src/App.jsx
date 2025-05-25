@@ -30,7 +30,7 @@ export default function App() {
           <RestaurantForm />
         </Section>
 
-        <Section title='Adicionar categorias'>
+        <Section title='Categorias'>
           <CategoryForm categories={categories} handleCategory={handleCategory} />
           <CategoryList categories={categories} setCategories={setCategories} />
         </Section>
