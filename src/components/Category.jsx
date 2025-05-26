@@ -1,7 +1,7 @@
 import SectionHeader from './SectionHeader';
 import Button from './Button';
-import ItemList from './ItemList';
 import ItemForm from './ItemForm';
+import ItemsSection from './ItemsSection';
 
 export default function Category({ category, setCategories, setOpened, opened }) {
   return (
@@ -23,11 +23,7 @@ export default function Category({ category, setCategories, setOpened, opened })
         opened={opened}
       />
 
-      {category.items.length > 0 ? (
-        <ItemList category={category} setCategories={setCategories} />
-      ) : (
-        <p className='text-center text-gray-500'>Nenhum item cadastrado</p>
-      )}
+      <ItemsSection category={category} setCategories={setCategories} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Section from './Section';
 import CategoryForm from './CategoryForm';
 import Category from './Category';
+import FallbackMessage from './FallbackMessage';
 
 export default function CategoriesSection() {
   const [categories, setCategories] = useState([]);
@@ -35,7 +36,11 @@ export default function CategoriesSection() {
         ))}
 
         {categories.length === 0 && (
-          <p className='text-center text-gray-500'>Nenhuma categoria cadastrada</p>
+          <FallbackMessage
+            message='Nenhuma categoria cadastrada'
+            description='Adicione uma nova categoria'
+            className='bg-gray-100'
+          />
         )}
       </div>
     </Section>
