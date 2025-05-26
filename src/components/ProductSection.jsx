@@ -12,7 +12,7 @@ import { CiCirclePlus } from 'react-icons/ci';
 export default function ProductSection() {
   const [categoryForm, setCategoryForm] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [CategoryFormOpen, setCategoryFormOpen] = useState(false);
+  const [categoryFormOpen, setCategoryFormOpen] = useState(false);
 
   useEffect(() => {
     const storedCategories = localStorage.getItem('categories');
@@ -37,7 +37,7 @@ export default function ProductSection() {
         description='Preencha as informações dos produtos que irão aparecer no cardápio.'
       >
         <Button
-          onClick={() => setCategoryFormOpen(!CategoryFormOpen)}
+          onClick={() => setCategoryFormOpen(!categoryFormOpen)}
           type='button'
           className='mt-0'
           icon={CiCirclePlus}
@@ -47,7 +47,7 @@ export default function ProductSection() {
       </SectionHeader>
 
       <CategoryForm
-        isOpen={CategoryFormOpen}
+        isOpen={categoryFormOpen}
         setOpened={setCategoryFormOpen}
         categories={categories}
         setCategories={setCategories}
@@ -55,7 +55,7 @@ export default function ProductSection() {
         setCategoryForm={setCategoryForm}
       />
 
-      {categories.length === 0 && (
+      {categories.length === 0 && !categoryFormOpen && (
         <FallbackMessage
           message='Nenhuma categoria cadastrada'
           description='Clique no botão "Adicionar Categoria" para comecar'
@@ -63,7 +63,11 @@ export default function ProductSection() {
         />
       )}
 
-      <CategorySection categories={categories} handleEditCategory={handleEditCategory} />
+      <CategorySection
+        categories={categories}
+        setCategories={setCategories}
+        handleEditCategory={handleEditCategory}
+      />
     </section>
   );
 }

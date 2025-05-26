@@ -1,11 +1,26 @@
+import { useState } from 'react';
+
 import SectionHeader from './SectionHeader';
 import Button from './Button';
+import ItemForm from './ItemForm';
 import FallbackMessage from './FallbackMessage';
 
 import { CiEdit, CiTrash, CiCirclePlus } from 'react-icons/ci';
 import { IoMdRestaurant } from 'react-icons/io';
 
-export default function Category({ category, handleEditCategory }) {
+export default function Category({ category, setCategories, handleEditCategory }) {
+  const [itemFormOpen, setItemFormOpen] = useState(false);
+
+  const handleDeleteCategory = category => {
+    const storedCategories = JSON.parse(localStorage.getItem('categories'));
+
+    const updatedCategories = storedCategories.filter(cat => cat.id !== category.id);
+
+    localStorage.setItem('categories', JSON.stringify(updatedCategories));
+
+    setCategories(updatedCategories);
+  };
+
   return (
     <section className='flex flex-col items-center justify-between border-2 px-4 pb-4 border-gray-300 gap-4'>
       <SectionHeader
@@ -25,7 +40,12 @@ export default function Category({ category, handleEditCategory }) {
             Editar
           </Button>
 
-          <Button type='button' className={'px-2 py-1 bg-red-400 hover:bg-red-500'} icon={CiTrash}>
+          <Button
+            type='button'
+            className={'px-2 py-1 bg-red-400 hover:bg-red-500'}
+            icon={CiTrash}
+            onClick={() => handleDeleteCategory(category)}
+          >
             Excluir
           </Button>
 
@@ -33,13 +53,21 @@ export default function Category({ category, handleEditCategory }) {
             type='button'
             className={'px-2 py-1 bg-green-400 hover:bg-green-500'}
             icon={CiCirclePlus}
+            onClick={() => setItemFormOpen(true)}
           >
             Adicionar Item
           </Button>
         </div>
       </SectionHeader>
 
-      {category.items.length === 0 && (
+      <ItemForm
+        category={category}
+        setCategories={setCategories}
+        isOpen={itemFormOpen}
+        setOpened={setItemFormOpen}
+      />
+
+      {category.items.length === 0 && !itemFormOpen && (
         <FallbackMessage
           message='Nenhum item cadastrado'
           description='Clique no botão "Adicionar Item" para comecar'

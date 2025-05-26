@@ -6,7 +6,7 @@ import FigureInput from './FigureInput';
 
 import { convertToBase64 } from '../assets/convertToBase64';
 
-export default function ItemForm({ category, setCategories, setOpened, opened }) {
+export default function ItemForm({ category, setCategories, isOpen, setOpened }) {
   const [item, setItem] = useState({});
 
   const handleSubmit = async event => {
@@ -26,7 +26,7 @@ export default function ItemForm({ category, setCategories, setOpened, opened })
     localStorage.setItem('categories', JSON.stringify(updatedCategories));
 
     setCategories(updatedCategories);
-    setOpened({ status: false, category: null });
+    setOpened(false);
   };
 
   const handleFormData = async event => {
@@ -50,11 +50,8 @@ export default function ItemForm({ category, setCategories, setOpened, opened })
 
   return (
     <>
-      {opened.status && opened.category.id === category.id && (
-        <form
-          className='flex w-full items-start gap-6 border-t-2 border-gray-200 px-2 pt-4'
-          onSubmit={handleSubmit}
-        >
+      {isOpen && (
+        <form className='flex w-full items-start gap-6 px-2 pt-4' onSubmit={handleSubmit}>
           <FigureInput
             src={item.image || 'your-logo.png'}
             alt={'imagem do produto'}
