@@ -14,7 +14,7 @@ export default function FallbackMessage({
     <div className={`w-full text-center py-8 ${className}`}>
       <p className='text-gray-500 text-lg mb-2'>{message}</p>
 
-      {description && <p className='text-gray-400 text-sm mb-4'>{description}</p>}
+      {description && <p className='text-gray-400 text-sm mb-2'>{description}</p>}
 
       {showButton && (
         <Button

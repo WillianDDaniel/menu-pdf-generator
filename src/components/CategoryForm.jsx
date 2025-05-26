@@ -1,14 +1,14 @@
 import Button from './Button';
 import InputContainer from './InputContainer';
 
-export default function CategoryForm({ categories, setCategories }) {
+export default function CategoryForm({ categories, setCategories, isOpen = false }) {
   const handleSubmit = async event => {
     event.preventDefault();
 
     const category = await handleFormData(event);
     event.target.reset();
 
-    setCategories(category);
+    setCategories(prevCat => [...prevCat, category]);
 
     localStorage.setItem('categories', JSON.stringify([...categories, category]));
   };
@@ -27,30 +27,34 @@ export default function CategoryForm({ categories, setCategories }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className='flex w-full justify-center border-2 border-gray-300 p-4 gap-4 flex-1'
-    >
-      <InputContainer
-        inputClassName='flex-1'
-        label='Nome da categoria'
-        type='text'
-        name='name'
-        placeholder='Ex: Pizza'
-        required
-      />
+    <>
+      {isOpen && (
+        <form
+          onSubmit={handleSubmit}
+          className='flex w-full justify-center border-2 border-gray-300 p-4 gap-4 flex-1'
+        >
+          <InputContainer
+            inputClassName='flex-1'
+            label='Nome da categoria'
+            type='text'
+            name='name'
+            placeholder='Ex: Pizza'
+            required
+          />
 
-      <InputContainer
-        label='Descrição da categoria'
-        type='text'
-        name='description'
-        placeholder='Ex: Pizzas de diversos sabores'
-        required
-      />
+          <InputContainer
+            label='Descrição da categoria'
+            type='text'
+            name='description'
+            placeholder='Ex: Pizzas de diversos sabores'
+            required
+          />
 
-      <Button type='submit' className={'mt-4 cursor-pointer'}>
-        Salvar
-      </Button>
-    </form>
+          <Button type='submit' className={'mt-4 cursor-pointer'}>
+            Salvar
+          </Button>
+        </form>
+      )}
+    </>
   );
 }

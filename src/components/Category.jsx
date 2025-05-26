@@ -1,29 +1,49 @@
 import SectionHeader from './SectionHeader';
 import Button from './Button';
-import ItemForm from './ItemForm';
-import ItemsSection from './ItemsSection';
+import FallbackMessage from './FallbackMessage';
 
-export default function Category({ category, setCategories, setOpened, opened }) {
+import { CiEdit, CiTrash, CiCirclePlus } from 'react-icons/ci';
+import { IoMdRestaurant } from 'react-icons/io';
+
+export default function Category({ category }) {
   return (
-    <div className='flex flex-col items-center justify-between border-2 px-4 pb-4 border-gray-300 gap-4'>
-      <SectionHeader HeadingText={category.name} description={category.description}>
-        <Button
-          type='button'
-          className='mt-0'
-          onClick={() => setOpened({ status: true, category })}
-        >
-          Adicionar item
-        </Button>
+    <section className='flex flex-col items-center justify-between border-2 px-4 pb-4 border-gray-300 gap-4'>
+      <SectionHeader
+        HeadingIcon={<IoMdRestaurant />}
+        headingLevel={2}
+        headingClassName='text-2xl font-bold'
+        headingText={category.name}
+      >
+        <div className='flex gap-2'>
+          <Button
+            type='button'
+            className={'px-2 py-1 bg-amber-400 hover:bg-amber-500'}
+            icon={CiEdit}
+          >
+            Editar
+          </Button>
+
+          <Button type='button' className={'px-2 py-1 bg-red-400 hover:bg-red-500'} icon={CiTrash}>
+            Excluir
+          </Button>
+
+          <Button
+            type='button'
+            className={'px-2 py-1 bg-green-400 hover:bg-green-500'}
+            icon={CiCirclePlus}
+          >
+            Adicionar Item
+          </Button>
+        </div>
       </SectionHeader>
 
-      <ItemForm
-        category={category}
-        setOpened={setOpened}
-        setCategories={setCategories}
-        opened={opened}
-      />
-
-      <ItemsSection category={category} setCategories={setCategories} />
-    </div>
+      {category.items.length === 0 && (
+        <FallbackMessage
+          message='Nenhum item cadastrado'
+          description='Clique no botão "Adicionar Item" para comecar'
+          className='bg-gray-100'
+        />
+      )}
+    </section>
   );
 }
