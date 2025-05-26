@@ -4,11 +4,13 @@ import SectionHeader from './SectionHeader';
 import Button from './Button';
 import CategoryForm from './CategoryForm';
 import CategorySection from './CategorySection';
+import FallbackMessage from './FallbackMessage';
 
 import { MdMenuBook } from 'react-icons/md';
 import { CiCirclePlus } from 'react-icons/ci';
 
 export default function ProductSection() {
+  const [categoryForm, setCategoryForm] = useState(null);
   const [categories, setCategories] = useState([]);
   const [CategoryFormOpen, setCategoryFormOpen] = useState(false);
 
@@ -19,6 +21,11 @@ export default function ProductSection() {
       setCategories(JSON.parse(storedCategories));
     }
   }, []);
+
+  const handleEditCategory = categoryId => {
+    setCategoryFormOpen(true);
+    setCategoryForm(categories.find(category => category.id === categoryId));
+  };
 
   return (
     <section className='w-full py-8 flex flex-col gap-8'>
@@ -41,11 +48,22 @@ export default function ProductSection() {
 
       <CategoryForm
         isOpen={CategoryFormOpen}
+        setOpened={setCategoryFormOpen}
         categories={categories}
         setCategories={setCategories}
+        categoryForm={categoryForm}
+        setCategoryForm={setCategoryForm}
       />
 
-      <CategorySection categories={categories} />
+      {categories.length === 0 && (
+        <FallbackMessage
+          message='Nenhuma categoria cadastrada'
+          description='Clique no botão "Adicionar Categoria" para comecar'
+          className='bg-gray-100'
+        />
+      )}
+
+      <CategorySection categories={categories} handleEditCategory={handleEditCategory} />
     </section>
   );
 }

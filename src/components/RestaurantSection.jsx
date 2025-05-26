@@ -13,6 +13,7 @@ export default function RestaurantSection() {
         headingText='Informações do Restaurante'
         description='Preencha as informações do seu restaurante que irão aparecer no cardápio.'
       />
+
       <RestaurantForm />
     </section>
   );
