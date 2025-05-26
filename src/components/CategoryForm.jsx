@@ -1,14 +1,14 @@
 import Button from './Button';
 import InputContainer from './InputContainer';
 
-export default function CategoryForm({ categories, handleCategory }) {
+export default function CategoryForm({ categories, setCategories }) {
   const handleSubmit = async event => {
     event.preventDefault();
 
     const category = await handleFormData(event);
     event.target.reset();
 
-    handleCategory(category);
+    setCategories(category);
 
     localStorage.setItem('categories', JSON.stringify([...categories, category]));
   };
