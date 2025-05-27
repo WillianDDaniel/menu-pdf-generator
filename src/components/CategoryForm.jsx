@@ -1,14 +1,18 @@
+import { useCategoryContext } from '../hooks/useCategoryContext';
+
 import Button from './Button';
 import InputContainer from './InputContainer';
 
-export default function CategoryForm({
-  categories,
-  setCategories,
-  isOpen = false,
-  setOpened,
-  categoryForm,
-  setCategoryForm,
-}) {
+export default function CategoryForm() {
+  const {
+    categories,
+    setCategories,
+    categoryFormData,
+    setCategoryFormData,
+    categoryFormOpen,
+    setCategoryFormOpen,
+  } = useCategoryContext();
+
   const handleSubmit = async event => {
     event.preventDefault();
 
@@ -19,7 +23,7 @@ export default function CategoryForm({
 
     localStorage.setItem('categories', JSON.stringify([...categories, category]));
 
-    setOpened(false);
+    setCategoryFormOpen(false);
   };
 
   const handleFormData = async event => {
@@ -43,7 +47,7 @@ export default function CategoryForm({
 
     const storedCategories = JSON.parse(localStorage.getItem('categories'));
     const updatedCategories = storedCategories.map(cat => {
-      if (cat.id === categoryForm.id) {
+      if (cat.id === categoryFormData.id) {
         return editedcategory;
       }
       return cat;
@@ -52,14 +56,14 @@ export default function CategoryForm({
     localStorage.setItem('categories', JSON.stringify(updatedCategories));
 
     setCategories(updatedCategories);
-    setOpened(false);
+    setCategoryFormOpen(false);
   };
 
   return (
     <>
-      {isOpen && (
+      {categoryFormOpen && (
         <form
-          onSubmit={categoryForm?.id ? handleEditCategory : handleSubmit}
+          onSubmit={categoryFormData?.id ? handleEditCategory : handleSubmit}
           className='flex w-full justify-center border-2 border-gray-300 p-4 gap-4 flex-1'
         >
           <InputContainer
@@ -67,10 +71,10 @@ export default function CategoryForm({
             label='Nome da categoria'
             type='text'
             name='name'
-            value={categoryForm?.name || ''}
+            value={categoryFormData?.name || ''}
             onChange={e => {
-              setCategoryForm({
-                ...categoryForm,
+              setCategoryFormData({
+                ...categoryFormData,
                 name: e.target.value,
               });
             }}
@@ -82,10 +86,10 @@ export default function CategoryForm({
             label='Descrição da categoria'
             type='text'
             name='description'
-            value={categoryForm?.description || ''}
+            value={categoryFormData?.description || ''}
             onChange={e => {
-              setCategoryForm({
-                ...categoryForm,
+              setCategoryFormData({
+                ...categoryFormData,
                 description: e.target.value,
               });
             }}
@@ -94,7 +98,7 @@ export default function CategoryForm({
           />
 
           <Button type='submit' className={'mt-4 cursor-pointer'}>
-            {categoryForm?.id ? 'Atualizar' : 'Salvar'}
+            {categoryFormData?.id ? 'Atualizar' : 'Salvar'}
           </Button>
         </form>
       )}

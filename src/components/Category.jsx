@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCategoryContext } from '../hooks/useCategoryContext';
 
 import SectionHeader from './SectionHeader';
 import Button from './Button';
@@ -8,8 +9,9 @@ import FallbackMessage from './FallbackMessage';
 import { CiEdit, CiTrash, CiCirclePlus } from 'react-icons/ci';
 import { IoMdRestaurant } from 'react-icons/io';
 
-export default function Category({ category, setCategories, handleEditCategory }) {
+export default function Category({ category }) {
   const [itemFormOpen, setItemFormOpen] = useState(false);
+  const { setCategories, handleEditCategory } = useCategoryContext();
 
   const handleDeleteCategory = category => {
     const storedCategories = JSON.parse(localStorage.getItem('categories'));

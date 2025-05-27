@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCategoryContext } from '../hooks/useCategoryContext';
 
 import SectionHeader from './SectionHeader';
 import Button from './Button';
@@ -10,22 +10,7 @@ import { MdMenuBook } from 'react-icons/md';
 import { CiCirclePlus } from 'react-icons/ci';
 
 export default function ProductSection() {
-  const [categoryForm, setCategoryForm] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [categoryFormOpen, setCategoryFormOpen] = useState(false);
-
-  useEffect(() => {
-    const storedCategories = localStorage.getItem('categories');
-
-    if (storedCategories) {
-      setCategories(JSON.parse(storedCategories));
-    }
-  }, []);
-
-  const handleEditCategory = categoryId => {
-    setCategoryFormOpen(true);
-    setCategoryForm(categories.find(category => category.id === categoryId));
-  };
+  const { categories, handleAddCategory, categoryFormOpen } = useCategoryContext();
 
   return (
     <section className='w-full py-8 flex flex-col gap-8'>
@@ -36,24 +21,12 @@ export default function ProductSection() {
         headingText='Cadastro do seu Cardápio'
         description='Preencha as informações dos produtos que irão aparecer no cardápio.'
       >
-        <Button
-          onClick={() => setCategoryFormOpen(!categoryFormOpen)}
-          type='button'
-          className='mt-0'
-          icon={CiCirclePlus}
-        >
+        <Button onClick={handleAddCategory} type='button' className='mt-0' icon={CiCirclePlus}>
           Adicionar categoria
         </Button>
       </SectionHeader>
 
-      <CategoryForm
-        isOpen={categoryFormOpen}
-        setOpened={setCategoryFormOpen}
-        categories={categories}
-        setCategories={setCategories}
-        categoryForm={categoryForm}
-        setCategoryForm={setCategoryForm}
-      />
+      <CategoryForm />
 
       {categories.length === 0 && !categoryFormOpen && (
         <FallbackMessage
@@ -63,11 +36,7 @@ export default function ProductSection() {
         />
       )}
 
-      <CategorySection
-        categories={categories}
-        setCategories={setCategories}
-        handleEditCategory={handleEditCategory}
-      />
+      <CategorySection categories={categories} />
     </section>
   );
 }
