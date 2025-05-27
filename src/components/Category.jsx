@@ -11,17 +11,7 @@ import { IoMdRestaurant } from 'react-icons/io';
 
 export default function Category({ category }) {
   const [itemFormOpen, setItemFormOpen] = useState(false);
-  const { setCategories, handleEditCategory } = useCategoryContext();
-
-  const handleDeleteCategory = category => {
-    const storedCategories = JSON.parse(localStorage.getItem('categories'));
-
-    const updatedCategories = storedCategories.filter(cat => cat.id !== category.id);
-
-    localStorage.setItem('categories', JSON.stringify(updatedCategories));
-
-    setCategories(updatedCategories);
-  };
+  const { setCategories, handleEditCategory, handleDeleteCategory } = useCategoryContext();
 
   return (
     <section className='flex flex-col items-center justify-between border-2 px-4 pb-4 border-gray-300 gap-4'>
@@ -46,7 +36,7 @@ export default function Category({ category }) {
             type='button'
             className={'px-2 py-1 bg-red-400 hover:bg-red-500'}
             icon={CiTrash}
-            onClick={() => handleDeleteCategory(category)}
+            onClick={() => handleDeleteCategory(category.id)}
           >
             Excluir
           </Button>

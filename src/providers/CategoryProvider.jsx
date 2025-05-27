@@ -1,4 +1,6 @@
+// src/context/category/CategoryProvider.jsx
 import { useState, useEffect } from 'react';
+
 import { CategoryContext } from '../context/CategoryContext';
 
 export function CategoryProvider({ children }) {
@@ -11,6 +13,11 @@ export function CategoryProvider({ children }) {
     if (stored) setCategories(JSON.parse(stored));
   }, []);
 
+  const saveCategoriesToStorage = categories => {
+    setCategories(categories);
+    localStorage.setItem('categories', JSON.stringify(categories));
+  };
+
   const handleEditCategory = categoryId => {
     setCategoryFormOpen(true);
     setCategoryFormData(categories.find(cat => cat.id === categoryId));
@@ -21,17 +28,56 @@ export function CategoryProvider({ children }) {
     setCategoryFormData(null);
   };
 
+  const handleDeleteCategory = categoryId => {
+    const storedCategories = JSON.parse(localStorage.getItem('categories'));
+
+    const updatedCategories = storedCategories.filter(cat => cat.id !== categoryId);
+
+    localStorage.setItem('categories', JSON.stringify(updatedCategories));
+
+    setCategories(updatedCategories);
+  };
+
+  const saveCategory = formValues => {
+    const newCategory = {
+      id: Date.now().toString(),
+      ...formValues,
+      items: [],
+    };
+
+    const updatedCategories = [...categories, newCategory];
+    saveCategoriesToStorage(updatedCategories);
+    setCategoryFormOpen(false);
+  };
+
+  const updateCategory = formValues => {
+    const updatedCategory = {
+      ...formValues,
+      id: categoryFormData.id,
+      items: categoryFormData.items ?? [],
+    };
+
+    const updatedCategories = categories.map(cat =>
+      cat.id === categoryFormData.id ? updatedCategory : cat,
+    );
+
+    saveCategoriesToStorage(updatedCategories);
+    setCategoryFormOpen(false);
+  };
+
   return (
     <CategoryContext.Provider
       value={{
         categories,
-        setCategories,
         categoryFormData,
         setCategoryFormData,
         categoryFormOpen,
         setCategoryFormOpen,
         handleEditCategory,
         handleAddCategory,
+        handleDeleteCategory,
+        saveCategory,
+        updateCategory,
       }}
     >
       {children}
