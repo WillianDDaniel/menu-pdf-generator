@@ -1,17 +1,20 @@
-import { useState } from 'react';
 import { useCategoryContext } from '../hooks/useCategoryContext';
+import { useItemContext } from '../hooks/useItemContext';
 
 import SectionHeader from './SectionHeader';
 import Button from './Button';
 import ItemForm from './ItemForm';
 import FallbackMessage from './FallbackMessage';
+import ItemSection from './ItemSection';
 
 import { CiEdit, CiTrash, CiCirclePlus } from 'react-icons/ci';
 import { IoMdRestaurant } from 'react-icons/io';
 
 export default function Category({ category }) {
-  const [itemFormOpen, setItemFormOpen] = useState(false);
-  const { setCategories, handleEditCategory, handleDeleteCategory } = useCategoryContext();
+  const { handleEditCategory, handleDeleteCategory } = useCategoryContext();
+  const { items, itemFormOpen, setItemFormOpen } = useItemContext();
+
+  const categoryItems = items.filter(item => item.categoryId === category.id);
 
   return (
     <section className='flex flex-col items-center justify-between border-2 px-4 pb-4 border-gray-300 gap-4'>
@@ -45,27 +48,24 @@ export default function Category({ category }) {
             type='button'
             className={'px-2 py-1 bg-green-400 hover:bg-green-500'}
             icon={CiCirclePlus}
-            onClick={() => setItemFormOpen(true)}
+            onClick={() => setItemFormOpen({ categoryId: category.id })}
           >
             Adicionar Item
           </Button>
         </div>
       </SectionHeader>
 
-      <ItemForm
-        category={category}
-        setCategories={setCategories}
-        isOpen={itemFormOpen}
-        setOpened={setItemFormOpen}
-      />
+      <ItemForm category={category} />
 
-      {category.items.length === 0 && !itemFormOpen && (
+      {categoryItems.length === 0 && (!itemFormOpen || itemFormOpen.categoryId !== category.id) && (
         <FallbackMessage
           message='Nenhum item cadastrado'
           description='Clique no botão "Adicionar Item" para comecar'
           className='bg-gray-100'
         />
       )}
+
+      <ItemSection items={categoryItems} />
     </section>
   );
 }

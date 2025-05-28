@@ -6,11 +6,14 @@ import './index.css';
 import App from './App.jsx';
 
 import { CategoryProvider } from './providers/CategoryProvider.jsx';
+import { ItemProvider } from './providers/ItemProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <CategoryProvider>
-      <App />
+      <ItemProvider>
+        <App />
+      </ItemProvider>
     </CategoryProvider>
   </StrictMode>,
 );

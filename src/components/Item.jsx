@@ -1,9 +1,17 @@
-export default function Item({ children, item }) {
+import { useItemContext } from '../hooks/useItemContext';
+
+import Button from './Button';
+
+import { CiEdit, CiTrash } from 'react-icons/ci';
+
+export default function Item({ item }) {
+  const { deleteItem, handleEditItem } = useItemContext();
+
   return (
     <div className='flex border border-gray-200 rounded-lg p-4 shadow-sm bg-white gap-4'>
       <figure className='flex-shrink-0'>
         <img
-          src={item.image || 'your-logo.png'}
+          src={item.image || 'no-image.png'}
           alt={item.name}
           className='w-36 h-36 object-cover rounded-md'
         />
@@ -24,7 +32,25 @@ export default function Item({ children, item }) {
         <div className='flex gap-2 justify-between items-center'>
           <span className='text-xl font-bold text-green-600'>R${item.price}</span>
 
-          {children}
+          <div className='flex gap-2'>
+            <Button
+              type='button'
+              className='mt-0 text-sm px-2 py-1 bg-amber-500'
+              icon={CiEdit}
+              onClick={() => handleEditItem(item.id)}
+            >
+              Editar
+            </Button>
+
+            <Button
+              type='button'
+              className='mt-0 text-sm px-2 py-1 bg-red-400'
+              icon={CiTrash}
+              onClick={() => deleteItem(item.id)}
+            >
+              Excluir
+            </Button>
+          </div>
         </div>
       </div>
     </div>

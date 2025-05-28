@@ -42,7 +42,6 @@ export function CategoryProvider({ children }) {
     const newCategory = {
       id: Date.now().toString(),
       ...formValues,
-      items: [],
     };
 
     const updatedCategories = [...categories, newCategory];
@@ -52,9 +51,8 @@ export function CategoryProvider({ children }) {
 
   const updateCategory = formValues => {
     const updatedCategory = {
-      ...formValues,
       id: categoryFormData.id,
-      items: categoryFormData.items ?? [],
+      ...formValues,
     };
 
     const updatedCategories = categories.map(cat =>
