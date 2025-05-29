@@ -3,9 +3,18 @@ import { useCategoryContext } from '../hooks/useCategoryContext';
 import Button from './Button';
 import InputContainer from './InputContainer';
 
+import { ImCancelCircle } from 'react-icons/im';
+import { CiSaveDown1 } from 'react-icons/ci';
+
 export default function CategoryForm() {
-  const { categoryFormData, setCategoryFormData, categoryFormOpen, saveCategory, updateCategory } =
-    useCategoryContext();
+  const {
+    categoryFormData,
+    setCategoryFormData,
+    categoryFormOpen,
+    setCategoryFormOpen,
+    saveCategory,
+    updateCategory,
+  } = useCategoryContext();
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -31,10 +40,10 @@ export default function CategoryForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex w-full justify-center border-2 border-gray-300 p-4 gap-4 flex-1'
+      className='flex w-full justify-center items-center border-2 border-gray-300 p-4 gap-4 flex-1'
     >
       <InputContainer
-        inputClassName='flex-1'
+        className='flex-1'
         label='Nome da categoria'
         type='text'
         name='name'
@@ -50,6 +59,7 @@ export default function CategoryForm() {
       />
 
       <InputContainer
+        className='flex-1'
         label='Descrição da categoria'
         type='text'
         name='description'
@@ -64,7 +74,22 @@ export default function CategoryForm() {
         required
       />
 
-      <Button type='submit' className={'mt-4 cursor-pointer'}>
+      <Button
+        type='button'
+        className={'mt-4 cursor-pointer px-2 py-1 bg-red-400 hover:bg-red-500'}
+        icon={ImCancelCircle}
+        onClick={() => {
+          setCategoryFormOpen(false);
+        }}
+      >
+        Cancelar
+      </Button>
+
+      <Button
+        type='submit'
+        className={'mt-4 cursor-pointer px-2 py-1 bg-green-400 hover:bg-green-500'}
+        icon={CiSaveDown1}
+      >
         {categoryFormData?.id ? 'Atualizar' : 'Salvar'}
       </Button>
     </form>

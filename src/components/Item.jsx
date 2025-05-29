@@ -13,7 +13,7 @@ export default function Item({ item }) {
         <img
           src={item.image || 'no-image.png'}
           alt={item.name}
-          className='w-36 h-36 object-cover rounded-md'
+          className='w-36 h-36 object-cover rounded-sm bg-gray-100'
         />
       </figure>
 
@@ -30,7 +30,7 @@ export default function Item({ item }) {
         </p>
 
         <div className='flex gap-2 justify-between items-center'>
-          <span className='text-xl font-bold text-green-600'>R${item.price}</span>
+          <span className='text-xl font-bold text-gray-800'>R${item.price}</span>
 
           <div className='flex gap-2'>
             <Button

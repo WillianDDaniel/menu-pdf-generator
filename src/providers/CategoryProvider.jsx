@@ -1,4 +1,3 @@
-// src/context/category/CategoryProvider.jsx
 import { useState, useEffect } from 'react';
 
 import { CategoryContext } from '../context/CategoryContext';
@@ -28,16 +27,6 @@ export function CategoryProvider({ children }) {
     setCategoryFormData(null);
   };
 
-  const handleDeleteCategory = categoryId => {
-    const storedCategories = JSON.parse(localStorage.getItem('categories'));
-
-    const updatedCategories = storedCategories.filter(cat => cat.id !== categoryId);
-
-    localStorage.setItem('categories', JSON.stringify(updatedCategories));
-
-    setCategories(updatedCategories);
-  };
-
   const saveCategory = formValues => {
     const newCategory = {
       id: Date.now().toString(),
@@ -63,6 +52,17 @@ export function CategoryProvider({ children }) {
     setCategoryFormOpen(false);
   };
 
+  const deleteCategory = categoryId => {
+    const items = JSON.parse(localStorage.getItem('items'));
+    const updatedItems = items.filter(item => item.categoryId !== categoryId);
+    localStorage.setItem('items', JSON.stringify(updatedItems));
+
+    const updatedCategories = categories.filter(cat => cat.id !== categoryId);
+    saveCategoriesToStorage(updatedCategories);
+
+    setCategories(updatedCategories);
+  };
+
   return (
     <CategoryContext.Provider
       value={{
@@ -73,7 +73,7 @@ export function CategoryProvider({ children }) {
         setCategoryFormOpen,
         handleEditCategory,
         handleAddCategory,
-        handleDeleteCategory,
+        deleteCategory,
         saveCategory,
         updateCategory,
       }}

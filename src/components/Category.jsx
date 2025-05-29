@@ -11,13 +11,13 @@ import { CiEdit, CiTrash, CiCirclePlus } from 'react-icons/ci';
 import { IoMdRestaurant } from 'react-icons/io';
 
 export default function Category({ category }) {
-  const { handleEditCategory, handleDeleteCategory } = useCategoryContext();
+  const { handleEditCategory, deleteCategory } = useCategoryContext();
   const { items, itemFormOpen, setItemFormOpen } = useItemContext();
 
   const categoryItems = items.filter(item => item.categoryId === category.id);
 
   return (
-    <section className='flex flex-col items-center justify-between border-2 px-4 pb-4 border-gray-300 gap-4'>
+    <section className='flex flex-col items-center justify-between border-2 px-4 border-gray-300 gap-4 pb-4'>
       <SectionHeader
         HeadingIcon={<IoMdRestaurant />}
         headingLevel={2}
@@ -39,7 +39,7 @@ export default function Category({ category }) {
             type='button'
             className={'px-2 py-1 bg-red-400 hover:bg-red-500'}
             icon={CiTrash}
-            onClick={() => handleDeleteCategory(category.id)}
+            onClick={() => deleteCategory(category.id)}
           >
             Excluir
           </Button>

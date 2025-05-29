@@ -32,11 +32,13 @@ export function ItemProvider({ children }) {
       ...formValues,
     };
 
-    saveItemsToStorage([...items, newItem]);
+    const storedItems = JSON.parse(localStorage.getItem('items')) || [];
+    saveItemsToStorage([...storedItems, newItem]);
   };
 
   const updateItem = formValues => {
-    const updatedItems = items.map(item =>
+    const storedItems = JSON.parse(localStorage.getItem('items'));
+    const updatedItems = storedItems.map(item =>
       item.id === itemFormData.id ? { ...item, ...formValues } : item,
     );
 
@@ -44,7 +46,8 @@ export function ItemProvider({ children }) {
   };
 
   const deleteItem = itemId => {
-    const updatedItems = items.filter(item => item.id !== itemId);
+    const storedItems = JSON.parse(localStorage.getItem('items'));
+    const updatedItems = storedItems.filter(item => item.id !== itemId);
 
     saveItemsToStorage(updatedItems);
   };
@@ -52,6 +55,7 @@ export function ItemProvider({ children }) {
   return (
     <ItemContext.Provider
       value={{
+        saveItemsToStorage,
         items,
         itemFormData,
         setItemFormData,
