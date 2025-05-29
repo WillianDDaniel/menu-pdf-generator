@@ -1,6 +1,8 @@
 import { useCategoryContext } from '../hooks/useCategoryContext';
 import { useItemContext } from '../hooks/useItemContext';
 
+import { notifySuccess } from './ToastNotifications';
+
 import SectionHeader from './SectionHeader';
 import Button from './Button';
 import ItemForm from './ItemForm';
@@ -39,7 +41,10 @@ export default function Category({ category }) {
             type='button'
             className={'px-2 py-1 bg-red-400 hover:bg-red-500'}
             icon={CiTrash}
-            onClick={() => deleteCategory(category.id)}
+            onClick={() => {
+              deleteCategory(category.id);
+              notifySuccess('Categoria excluída com sucesso!');
+            }}
           >
             Excluir
           </Button>

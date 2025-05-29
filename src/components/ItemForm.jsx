@@ -1,5 +1,7 @@
 import { useItemContext } from '../hooks/useItemContext';
 
+import { notifySuccess } from './ToastNotifications';
+
 import InputContainer from './InputContainer';
 import Button from './Button';
 import FigureInput from './FigureInput';
@@ -36,6 +38,8 @@ export default function ItemForm({ category }) {
     } else {
       saveItem(values);
     }
+
+    notifySuccess('Produto salvo com sucesso!');
 
     event.target.reset();
   };

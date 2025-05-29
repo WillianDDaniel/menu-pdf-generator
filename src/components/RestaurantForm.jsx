@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { notifySuccess } from './ToastNotifications';
+
 import InputContainer from './InputContainer';
 import Button from './Button';
 import FigureInput from './FigureInput';
@@ -24,6 +26,8 @@ export default function RestaurantForm() {
     localStorage.setItem('restaurant', JSON.stringify(restaurant));
 
     setRestaurant(restaurant);
+
+    notifySuccess('Restaurante salvo com sucesso!');
   };
 
   const handleFormData = async event => {

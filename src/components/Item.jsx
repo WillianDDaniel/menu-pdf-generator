@@ -1,5 +1,7 @@
 import { useItemContext } from '../hooks/useItemContext';
 
+import { notifySuccess } from './ToastNotifications';
+
 import Button from './Button';
 
 import { CiEdit, CiTrash } from 'react-icons/ci';
@@ -35,7 +37,7 @@ export default function Item({ item }) {
           <div className='flex gap-2'>
             <Button
               type='button'
-              className='mt-0 text-sm px-2 py-1 bg-amber-500'
+              className='mt-0 text-sm px-2 py-1 bg-amber-500 hover:bg-amber-600'
               icon={CiEdit}
               onClick={() => handleEditItem(item.id)}
             >
@@ -44,9 +46,12 @@ export default function Item({ item }) {
 
             <Button
               type='button'
-              className='mt-0 text-sm px-2 py-1 bg-red-400'
+              className='mt-0 text-sm px-2 py-1 bg-red-400 hover:bg-red-500'
               icon={CiTrash}
-              onClick={() => deleteItem(item.id)}
+              onClick={() => {
+                deleteItem(item.id);
+                notifySuccess('Item excluído com sucesso!');
+              }}
             >
               Excluir
             </Button>

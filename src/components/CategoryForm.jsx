@@ -1,5 +1,7 @@
 import { useCategoryContext } from '../hooks/useCategoryContext';
 
+import { notifySuccess } from './ToastNotifications';
+
 import Button from './Button';
 import InputContainer from './InputContainer';
 
@@ -16,7 +18,7 @@ export default function CategoryForm() {
     updateCategory,
   } = useCategoryContext();
 
-  const handleSubmit = async event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
     const { name, description } = event.target.elements;
@@ -31,6 +33,8 @@ export default function CategoryForm() {
     } else {
       saveCategory(values);
     }
+
+    notifySuccess('Categoria salva com sucesso!');
 
     event.target.reset();
   };
