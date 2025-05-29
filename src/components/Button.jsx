@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge'; // substitui o cn()
+import { twMerge } from 'tailwind-merge';
 
 export default function Button({
   icon: Icon,
@@ -13,10 +13,10 @@ export default function Button({
 
   return (
     <button type={type} className={twMerge(defaultClasses, className)} {...props}>
-      <div className='flex items-center gap-2 justify-center'>
-        {Icon && iconPosition === 'left' && <Icon className='w-5 h-5' />}
+      <div className='flex items-center justify-center gap-2'>
+        {Icon && iconPosition === 'left' && <Icon />}
         {children && <span>{children}</span>}
-        {Icon && iconPosition === 'right' && <Icon className='w-5 h-5' />}
+        {Icon && iconPosition === 'right' && <Icon />}
       </div>
     </button>
   );

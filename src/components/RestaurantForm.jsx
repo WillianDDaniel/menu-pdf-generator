@@ -44,11 +44,11 @@ export default function RestaurantForm() {
   };
 
   return (
-    <form className='flex items-start gap-6' onSubmit={handleSubmit}>
+    <form className='flex gap-8 p-8 border border-gray-200' onSubmit={handleSubmit}>
       <FigureInput
         src={restaurant.logo || 'your-logo.png'}
         alt={'Logo do restaurante'}
-        label='Adicionar logo'
+        labelText='Adicionar logo'
         name='logo'
         id='restaurant-logo'
         imgClassName='rounded-full'
@@ -57,7 +57,7 @@ export default function RestaurantForm() {
         }
       />
 
-      <div className='flex flex-col gap-0.5 flex-1'>
+      <div className='flex flex-col flex-1 justify-between gap-0.5'>
         <InputContainer
           label='Nome do restaurante'
           type='text'
