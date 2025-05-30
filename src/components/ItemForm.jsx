@@ -9,7 +9,7 @@ import FigureInput from './FigureInput';
 import { ImCancelCircle } from 'react-icons/im';
 import { CiSaveDown1 } from 'react-icons/ci';
 
-import { convertToBase64 } from '../assets/convertToBase64';
+import { processImageToSquareBlob } from '../assets/processImage';
 
 export default function ItemForm({ category }) {
   const { itemFormData, setItemFormData, setItemFormOpen, itemFormOpen, saveItem, updateItem } =
@@ -29,7 +29,7 @@ export default function ItemForm({ category }) {
     };
 
     if (image.files.length > 0) {
-      const base64 = await convertToBase64(image.files[0]);
+      const base64 = await processImageToSquareBlob(image.files[0]);
       values.image = base64;
     }
 

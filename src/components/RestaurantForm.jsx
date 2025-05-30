@@ -6,7 +6,7 @@ import InputContainer from './InputContainer';
 import Button from './Button';
 import FigureInput from './FigureInput';
 
-import { convertToBase64 } from '../assets/convertToBase64';
+import { processImageToSquareBlob } from '../assets/processImage';
 
 export default function RestaurantForm() {
   const [restaurant, setRestaurant] = useState({});
@@ -40,7 +40,7 @@ export default function RestaurantForm() {
     };
 
     if (logo.files.length > 0) {
-      const base64 = await convertToBase64(logo.files[0]);
+      const base64 = await processImageToSquareBlob(logo.files[0]);
       formData.logo = base64;
     }
 
