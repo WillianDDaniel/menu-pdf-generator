@@ -101,7 +101,7 @@ export async function generatePDF() {
 
         doc.setFillColor(255, 255, 255);
         doc.setDrawColor(230, 230, 230);
-        doc.rect(xPosition, yPosition, columnWidth, 30, 'FD');
+        doc.rect(xPosition, yPosition, columnWidth, 29, 'FD');
 
         if (product.image && typeof product.image === 'string' && product.image.length > 0) {
           try {
@@ -114,7 +114,7 @@ export async function generatePDF() {
         const hasImage =
           product.image && typeof product.image === 'string' && product.image.length > 0;
         const contentX = hasImage ? xPosition + 30 : xPosition + 8;
-        const contentWidth = hasImage ? 65 : 72;
+        const contentWidth = hasImage ? 65.5 : 72;
 
         doc.setFontSize(9);
         doc.setFont(undefined, 'bold');
@@ -125,7 +125,11 @@ export async function generatePDF() {
         }
 
         const nameLines = doc.splitTextToSize(productName, contentWidth);
-        doc.text(nameLines, contentX, yPosition + 5);
+        const hasMultipleNameLines = nameLines.length > 1;
+
+        // Ajusta posição do título baseado se tem quebra de linha
+        const titleY = hasMultipleNameLines ? yPosition + 5 : yPosition + 6;
+        doc.text(nameLines, contentX, titleY);
 
         doc.setFontSize(12);
         doc.setFont(undefined, 'bold');
@@ -140,7 +144,10 @@ export async function generatePDF() {
           const descLines = doc.splitTextToSize(product.description, contentWidth);
           const maxDescLines = 3;
           const displayLines = descLines.slice(0, maxDescLines);
-          doc.text(displayLines, contentX, yPosition + 14);
+
+          // Ajusta posição da descrição baseado se o título tem quebra de linha
+          const descY = hasMultipleNameLines ? yPosition + 14 : yPosition + 13;
+          doc.text(displayLines, contentX, descY);
         }
 
         if (currentColumn === 0) {
@@ -157,19 +164,19 @@ export async function generatePDF() {
 
       yPosition += 15;
     }
-
-    try {
-      const pdfBlob = doc.output('blob');
-      const blobUrl = URL.createObjectURL(pdfBlob);
-
-      window.open(blobUrl, '_blank');
-
-      const iframe = document.getElementById('pdfPreview');
-      if (iframe) {
-        iframe.src = blobUrl;
-      }
-    } catch (e) {
-      console.error('Erro ao gerar PDF:', e);
-    }
   });
+
+  try {
+    const pdfBlob = doc.output('blob');
+    const blobUrl = URL.createObjectURL(pdfBlob);
+
+    window.open(blobUrl, '_blank');
+
+    const iframe = document.getElementById('pdfPreview');
+    if (iframe) {
+      iframe.src = blobUrl;
+    }
+  } catch (e) {
+    console.error('Erro ao gerar PDF:', e);
+  }
 }
