@@ -6,6 +6,7 @@ import CategoryForm from './CategoryForm';
 import CategorySection from './CategorySection';
 import FallbackMessage from './FallbackMessage';
 
+import { generatePDF } from '../assets/generatePDF';
 import { MdMenuBook } from 'react-icons/md';
 import { CiCirclePlus } from 'react-icons/ci';
 
@@ -21,9 +22,15 @@ export default function ProductSection() {
         headingText='Cadastro do seu Cardápio'
         description='Preencha as informações dos produtos que irão aparecer no cardápio.'
       >
-        <Button onClick={handleAddCategory} type='button' className='mt-0' icon={CiCirclePlus}>
-          Adicionar categoria
-        </Button>
+        <div className='flex gap-2'>
+          <Button onClick={generatePDF} type='button' className='mt-0' icon={MdMenuBook}>
+            Ver cardápio
+          </Button>
+
+          <Button onClick={handleAddCategory} type='button' className='mt-0' icon={CiCirclePlus}>
+            Adicionar categoria
+          </Button>
+        </div>
       </SectionHeader>
 
       <CategoryForm />
